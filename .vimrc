@@ -91,3 +91,54 @@ nnoremap <leader>b :ls<CR>:buffer<Space>
 " --- 8. STATUSZEILE ---
 set laststatus=2  
 set statusline=%F%m%r%=%Y\ \|\ Spalte:\ %v\ \|\ Zeile:\ %l/%L\ (%p%%)
+
+" --- 9. INTEGRIRTES INTERAKTIVES CHEAT-SHEET (LERN-HILFE) ---
+
+
+function! OpenVimCheatSheet()
+    " 1. Prüfen, ob das Cheat-Sheet-Fenster bereits offen ist
+    let l:bufnum = bufnr('__Vim_Cheat_Sheet__')
+    if l:bufnum != -1
+        let l:winnum = bufwinnr(l:bufnum)
+        if l:winnum != -1
+            execute l:winnum . 'wincmd w'
+            close
+            return
+        endif
+    endif
+
+    " 2. Neues horizontales Fenster am unteren Rand öffnen (Höhe: 14 Zeilen)
+    botright 14split __Vim_Cheat_Sheet__
+
+    " 3. Puffer-Optionen setzen: Temporär, kein Swapping, kein Speichern
+    setlocal buftype=nofile
+    setlocal bufhidden=delete
+    setlocal noswapfile
+    setlocal nobuflisted
+    setlocal nowrap
+
+    " 4. Den Inhalt des Spickzettels zeilenweise einfügen
+    call append(0,  "=============================================================================")
+    call append(1,  "                   VIM SPICKZETTEL (Hände auf der Tastatur!)                  ")
+    call append(2,  "=============================================================================")
+    call append(3,  "  BEWEGUNG (Normalmodus):   h (links) | j (runter) | k (hoch) | l (rechts)     ")
+    call append(4,  "  WORTSPRÜNGE:              w (Wort vorwärts) | b (Wort zurück)                 ")
+    call append(5,  "  ZEILENSPRÜNGE:            0 (Zeilenanfang)   | $ (Zeilenende)                 ")
+    call append(6,  "  DATEISPRÜNGE:             gg (Anfang) | G (Ende) | :<Nummer><CR> (Zu Zeile)  ")
+    call append(7,  "  SUCHE IN ZEILE:           f<Buchstabe> (Springe auf) | ; (Wiederholen)        ")
+    call append(8,  "-----------------------------------------------------------------------------")
+    call append(9,  "  TEXT-OBJEKTE (Befehl = Aktion + Bereich + Objekt):                          ")
+    call append(10, "  AKTIONEN:                 d (löschen) | c (ändern/löschen+Insert) | y (copy) ")
+    call append(11, "  BEREICH / OBJEKT:         i\" (innen Anführungszeichen) | i( (innen Klammer)  ")
+    call append(12, "  BEISPIELE:                ci\" (Ändere String) | di( (Lösche Klammerinhalt) ")
+    call append(13, "-----------------------------------------------------------------------------")
+    call append(14, "  BUFFER:    <Leader>n (Next) | <Leader>p (Prev) | <Leader>b (Liste) | <Leader>c (Close) ")
+    call append(15, "=============================================================================")
+
+    " 5. Den Puffer schreibgeschützt schalten, damit man ihn nicht versehentlich editiert
+    setlocal readonly
+    setlocal nomodifiable
+endfunction
+
+" Shortcut: Leertaste + ? öffnet und schließt das Cheat-Sheet
+nnoremap <leader>? :call OpenVimCheatSheet()<CR>

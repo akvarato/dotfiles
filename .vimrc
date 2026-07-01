@@ -46,8 +46,8 @@ let g:netrw_winsize = 25      " Setzt die Breite der Seitenleiste auf 25%
 nnoremap <leader>e :Lexplore<CR>
 
 " 2. Hochleistungs-Suche mit internen Bordmitteln
-set path+=** " Rekursive Suche in allen Unterordnern für :find
-set wildmenu                  " Aktiviert die visuelle Befehlszeilen-Vervollständigung
+set path+=** set wildmenu " Rekursive Suche in allen Unterordnern für :find
+                          " Aktiviert die visuelle Befehlszeilen-Vervollständigung
 
 " Verzeichnisse und Dateien, die Vim bei der Suche komplett ignorieren soll
 set wildignore+=**/node_modules/**,**/Build/**,**/.git/**

@@ -22,6 +22,27 @@ set scrolloff=8       " Lässt beim Scrollen immer 8 Zeilen Platz zum Rand
 set ignorecase        " Ignoriert Groß-/Kleinschreibung bei der Suche...
 set smartcase         " ...außer du suchst explizit nach Großbuchstaben
 
+" --- PFEILTASTEN DEAKTIVIEREN (MUSKELGEDÄCHTNIS-TRAINING) ---
+" Deaktivierung im Normalmodus
+nnoremap <Up> <Nop>
+nnoremap <Down> <Nop>
+nnoremap <Left> <Nop>
+nnoremap <Right> <Nop>
+
+" Deaktivierung im visuellen Modus (Markierungsmodus)
+xnoremap <Up> <Nop>
+xnoremap <Down> <Nop>
+xnoremap <Left> <Nop>
+xnoremap <Right> <Nop>
+
+" Deaktivierung im Einfügemodus (Insert-Modus)
+inoremap <Up> <Nop>
+inoremap <Down> <Nop>
+inoremap <Left> <Nop>
+inoremap <Right> <Nop>
+
+
+
 " --- 3. CODE-FORMATTING & EINRÜCKUNG ---
 set expandtab         " Konvertiert jeden echten Tabulator in Leerzeichen (Spaces)
 set tabstop=4         " Ein Tabulator entspricht visuell 4 Leerzeichen

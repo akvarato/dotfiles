@@ -1,9 +1,8 @@
 " ============================================================================
-" PORTABLES HIGH-PERFORMANCE VIM SETUP (BEREINIGT & STRUKTURIERT)
+" PORTABLES HIGH-PERFORMANCE VIM SETUP (FINAL & FEHLERFREI)
 " ============================================================================
 
 " --- 1. ZUERST: DIE MAPLEADER DEFINITION ---
-" Muss ganz oben stehen, damit alle nachfolgenden <leader> Mappings greifen!
 nnoremap <Space> <Nop>
 xnoremap <Space> <Nop>
 let g:mapleader = " "
@@ -13,6 +12,7 @@ set nocompatible      " Schaltet den alten VI-Kompatibilitätsmodus aus
 syntax on             " Aktiviert das standardmäßige Syntax-Highlighting
 filetype plugin indent on
 
+set encoding=utf-8    " Garantiert saubere Darstellung von Sonderzeichen
 set number            " Zeigt Zeilennummern an
 set relativenumber    " Erleichtert das Springen mit Key-Commands (z.B. 5j)
 set mouse=            " Deaktiviert die Maussteuerung im Terminal
@@ -21,27 +21,24 @@ set noswapfile        " Verhindert die lästigen .swp-Dateien bei Abstürzen
 set scrolloff=8       " Lässt beim Scrollen immer 8 Zeilen Platz zum Rand
 set ignorecase        " Ignoriert Groß-/Kleinschreibung bei der Suche...
 set smartcase         " ...außer du suchst explizit nach Großbuchstaben
+set incsearch         " Springt bereits beim Tippen zum ersten Suchtreffer
+set hlsearch          " Hebt alle Suchtreffer im Dokument farblich hervor
 
 " --- PFEILTASTEN DEAKTIVIEREN (MUSKELGEDÄCHTNIS-TRAINING) ---
-" Deaktivierung im Normalmodus
 nnoremap <Up> <Nop>
 nnoremap <Down> <Nop>
 nnoremap <Left> <Nop>
 nnoremap <Right> <Nop>
 
-" Deaktivierung im visuellen Modus (Markierungsmodus)
 xnoremap <Up> <Nop>
 xnoremap <Down> <Nop>
 xnoremap <Left> <Nop>
 xnoremap <Right> <Nop>
 
-" Deaktivierung im Einfügemodus (Insert-Modus)
 inoremap <Up> <Nop>
 inoremap <Down> <Nop>
 inoremap <Left> <Nop>
 inoremap <Right> <Nop>
-
-
 
 " --- 3. CODE-FORMATTING & EINRÜCKUNG ---
 set expandtab         " Konvertiert jeden echten Tabulator in Leerzeichen (Spaces)
@@ -74,7 +71,7 @@ let g:netrw_altv = 1
 let g:netrw_winsize = 25      
 nnoremap <leader>e :Lexplore<CR>
 
-" --- 6. NATIVE HOCHLEISTUNGS-SUCHE (KORRIGIERT) ---
+" --- 6. NATIVE HOCHLEISTUNGS-SUCHE ---
 set path+=** " Rekursive Suche in allen Unterordnern für :find
 set wildmenu                  " Aktiviert die visuelle Befehlszeilen-Vervollständigung
 
@@ -88,15 +85,18 @@ nnoremap <leader>p :bprev<CR>
 nnoremap <leader>c :bp\|bd #<CR>
 nnoremap <leader>b :ls<CR>:buffer<Space>
 
-" --- 8. STATUSZEILE ---
+" --- 8. FENSTER MANAGEMENT (STRG + HJKL) ---
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+" --- 9. STATUSZEILE ---
 set laststatus=2  
 set statusline=%F%m%r%=%Y\ \|\ Spalte:\ %v\ \|\ Zeile:\ %l/%L\ (%p%%)
 
-" --- 9. INTEGRIRTES INTERAKTIVES CHEAT-SHEET (LERN-HILFE) ---
-
-
+" --- 10. INTEGRIERTES INTERAKTIVES CHEAT-SHEET ---
 function! OpenVimCheatSheet()
-    " 1. Prüfen, ob das Cheat-Sheet-Fenster bereits offen ist
     let l:bufnum = bufnr('__Vim_Cheat_Sheet__')
     if l:bufnum != -1
         let l:winnum = bufwinnr(l:bufnum)
@@ -107,17 +107,14 @@ function! OpenVimCheatSheet()
         endif
     endif
 
-    " 2. Neues horizontales Fenster am unteren Rand öffnen (Höhe: 14 Zeilen)
     botright 14split __Vim_Cheat_Sheet__
 
-    " 3. Puffer-Optionen setzen: Temporär, kein Swapping, kein Speichern
     setlocal buftype=nofile
     setlocal bufhidden=delete
     setlocal noswapfile
     setlocal nobuflisted
     setlocal nowrap
 
-    " 4. Den Inhalt des Spickzettels zeilenweise einfügen
     call append(0,  "=============================================================================")
     call append(1,  "                   VIM SPICKZETTEL (Hände auf der Tastatur!)                  ")
     call append(2,  "=============================================================================")
@@ -135,10 +132,8 @@ function! OpenVimCheatSheet()
     call append(14, "  BUFFER:    <Leader>n (Next) | <Leader>p (Prev) | <Leader>b (Liste) | <Leader>c (Close) ")
     call append(15, "=============================================================================")
 
-    " 5. Den Puffer schreibgeschützt schalten, damit man ihn nicht versehentlich editiert
     setlocal readonly
     setlocal nomodifiable
 endfunction
 
-" Shortcut: Leertaste + ? öffnet und schließt das Cheat-Sheet
 nnoremap <leader>? :call OpenVimCheatSheet()<CR>
